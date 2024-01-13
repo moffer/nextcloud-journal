@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    container_name: nextcloud-db
+    volumes:
+      - nextcloud-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=your-db-password
+    restart: unless-stopped
+
+  app:
+    image: nextcloud:latest
+    container_name: nextcloud-app
+    # user: ":1000"
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    volumes:
+      # - ./nextcloud-data:/var/www/html
+      - ./journal/:/var/www/html/custom_apps/journal
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=your-db-password
+    restart: unless-stopped
+
+volumes:
+  nextcloud-db:
+

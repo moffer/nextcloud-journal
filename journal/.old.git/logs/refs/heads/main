@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 fbd5779e22ba6a04d0e68bbca7b04dc3442d7764 Rafael <ch.subel@gmx.de> 1691008720 +0200	clone: from github.com:moffer/journal.git
+fbd5779e22ba6a04d0e68bbca7b04dc3442d7764 e1ed28abad6c55bd9743b0d934b23a3203887526 Rafael <ch.subel@gmx.de> 1691009986 +0200	commit: Update Readme.
+e1ed28abad6c55bd9743b0d934b23a3203887526 35df0ca5d1cdf26322cd4745742c40e29e0f3f34 Rafael <ch.subel@gmx.de> 1691184052 +0200	commit: Add pinia as store and fix typescript.
+35df0ca5d1cdf26322cd4745742c40e29e0f3f34 a03b2ec1538fcabc71be207d7fa1831109ac25ab Rafael <ch.subel@gmx.de> 1705172958 +0100	commit: Adjust README.
+a03b2ec1538fcabc71be207d7fa1831109ac25ab 48d0cad282ba83049e5d554c84f862ae515190a7 Rafael <ch.subel@gmx.de> 1705172972 +0100	commit: Adjust main vue.

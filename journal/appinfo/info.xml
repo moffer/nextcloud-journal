@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <!--
+    SPDX-FileCopyrightText: Rafael Muselmann <ch.subel@gmx.de>
+    SPDX-License-Identifier: CC0-1.0
+    -->
+    <id>journal</id>
+    <name>Journal</name>
+    <summary>Journal App for CalDav</summary>
+    <description><![CDATA[Journal App which is using CalDav from Nextcloud.]]></description>
+    <version>0.0.1</version>
+    <licence>agpl</licence>
+    <author mail="ch.subel@gmx.de" >Rafael Muselmann</author>
+    <namespace>Journal</namespace>
+    <category>tools</category>
+    <bugs>https://github.com/moffer/journal/issues</bugs>
+    <dependencies>
+        <nextcloud min-version="24" max-version="24"/>
+    </dependencies>
+    <navigations>
+        <navigation>
+            <name>Journal</name>
+            <route>journal.page.index</route>
+        </navigation>
+    </navigations>
+</info>
