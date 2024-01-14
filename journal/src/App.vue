@@ -46,8 +46,8 @@
 				<input type="button"
 					class="primary"
 					:value="t('journal', 'Save')"
-					:disabled="true || updating || !savePossible"
-					@click="saveNote">
+					:disabled="updating || !savePossible"
+					@click="saveEntry">
 			</div>
 			<div v-else id="emptycontent">
 				<div class="icon-file" />
@@ -147,11 +147,11 @@ export default {
 		 * Action tiggered when clicking the save button
 		 * create a new note or save
 		 */
-		saveNote() {
+		saveEntry() {
 			if (this.currentJournalEntryId === -1) {
 				this.createNote(this.currentNote)
 			} else {
-				this.updateNote(this.currentNote)
+				this.updateEntry(this.currentNote)
 			}
 		},
 		/**
@@ -197,16 +197,18 @@ export default {
 			this.updating = false
 		},
 		/**
-		 * Update an existing note on the server
-		 * @param {Object} note Note object
+		 * Update an existing journalEntry on the server
+		 * @param {Object} journalEntry Note object
 		 */
-		async updateNote(note) {
+		async updateEntry(journalEntry) {
 			this.updating = true
 			try {
-				await axios.put(generateUrl(`/apps/journal/notes/${note.id}`), note)
+        console.log(journalEntry);
+        await this.calendarStore.updateJournalEntry(journalEntry);
+				// await axios.put(generateUrl(`/apps/journal/notes/${journalEntry.id}`), journalEntry)
 			} catch (e) {
 				console.error(e)
-				showError(t('notestutorial', 'Could not update the note'))
+				showError(t('notestutorial', 'Could not update the journalEntry'))
 			}
 			this.updating = false
 		},

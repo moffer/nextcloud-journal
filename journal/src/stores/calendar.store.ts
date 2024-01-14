@@ -22,8 +22,15 @@ export const useCalendarStore = defineStore({
         async fetchJournalEntries() {
             try {
                 this.journalEntries = await calendarService.fetchCalendars();
+            } catch (error) {
+                alert(error)
+                console.log(error)
             }
-            catch (error) {
+        },
+        async updateJournalEntry(journalEntry) {
+            try {
+                await calendarService.updateCalendarEntry(journalEntry);
+            } catch (error) {
                 alert(error)
                 console.log(error)
             }

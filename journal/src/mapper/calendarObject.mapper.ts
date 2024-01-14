@@ -25,6 +25,7 @@ import {
 	COMPONENT_NAME_JOURNAL,
 	COMPONENT_NAME_VTODO,
 } from '../services/consts.js'
+import {CalendarObject, DavCalendarEvent} from "../types/cdav-library/calendar.type";
 
 /**
  * Creates a complete calendar-object-object based on given props
@@ -32,7 +33,7 @@ import {
  * @param {object} props Calendar-object-props already provided
  * @return {object}
  */
-const getDefaultCalendarObjectObject = (props = {}) => Object.assign({}, {
+const getDefaultCalendarObjectObject = (props = {}): CalendarObject => Object.assign({}, {
 	// Id of this calendar-object
 	id: null,
 	// Id of the associated calendar
@@ -60,11 +61,11 @@ const getDefaultCalendarObjectObject = (props = {}) => Object.assign({}, {
 /**
  * Maps a calendar-object from c-dav to our calendar-object object
  *
- * @param {VObject} dav The c-dav VObject
+ * @param {Event} dav The c-dav VObject
  * @param {string} calendarId The calendar-id this object is associated with
  * @return {object}
  */
-const mapCDavObjectToCalendarObject = (dav, calendarId) => {
+function mapCDavObjectToCalendarObject(dav: DavCalendarEvent, calendarId): CalendarObject {
 	const parserManager = getParserManager()
 	const parser = parserManager.getParserForFileType('text/calendar')
 	
@@ -101,7 +102,7 @@ const mapCDavObjectToCalendarObject = (dav, calendarId) => {
 /**
  * Maps a calendar-component from calendar-js to our calendar-object object
  *
- * @param {CalendarComponent} calendarComponent The calendarComponent to create the calendarObject from
+ * @param calendarComponent The calendarComponent to create the calendarObject from
  * @param {string=} calendarId The associated calendar if applicable
  * @return {object}
  */
