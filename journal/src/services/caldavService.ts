@@ -228,6 +228,17 @@ const getBirthdayCalendar = async () => {
 }
 
 /**
+ * Gets the birthday calendar
+ *
+ * @return {Promise<Calendar>}
+ */
+const getSingleCalendar = async (id: string) => {
+	console.log(id);
+	debugger;
+	return getCalendarHome().find(id)
+}
+
+/**
  * Returns the Current User Principal
  *
  * @return {Principal}
@@ -282,6 +293,7 @@ export {
 	createSubscription,
 	enableBirthdayCalendar,
 	getBirthdayCalendar,
+	getSingleCalendar,
 	getCurrentUserPrincipal,
 	principalPropertySearchByDisplaynameOrEmail,
 	advancedPrincipalPropertySearch,
