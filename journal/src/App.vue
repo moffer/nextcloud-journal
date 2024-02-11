@@ -1,36 +1,26 @@
 <template>
-    <!--
+	<!--
     SPDX-FileCopyrightText: Rafael Muselmann <ch.subel@gmx.de>
     SPDX-License-Identifier: AGPL-3.0-or-later
     -->
 	<div id="content" class="app-journal">
 		<AppNavigation>
-			<AppNavigationNew v-if="!loading"
-				:text="t('journal', 'New journal entry')"
-				:disabled="true"
-				button-id="new-journal-button"
-				button-class="icon-add"
-				@click="newNote" />
+			<AppNavigationNew v-for="calendar in calendarStore?.calendars" :key="calendar.id" :text="calendar.name" @click="selectCalendar(calendar.id)"></AppNavigationNew>
+			<AppNavigationNew v-if="!loading" :text="t('journal', 'New journal entry')" :disabled="true"
+				button-id="new-journal-button" button-class="icon-add" @click="newNote" />
 			<ul>
-				<AppNavigationItem v-for="journalEntry in calendarStore?.journalEntries"
-					:key="journalEntry.id"
+				<AppNavigationItem v-for="journalEntry in calendarStore?.journalEntries" :key="journalEntry.id"
 					:title="journalEntry.title ? journalEntry.title : t('journal', 'New journal entry')"
-					:class="{active: currentJournalEntryId === journalEntry.id}"
-					@click="openNote(journalEntry)">
+					:class="{ active: currentJournalEntryId === journalEntry.id }" @click="openNote(journalEntry)">
 					<template slot="actions">
-						<ActionButton v-if="journalEntry.id === -1"
-							:disabled="true"
-							icon="icon-close" 
+						<ActionButton v-if="journalEntry.id === -1" :disabled="true" icon="icon-close"
 							@click="cancelNewNote(journalEntry)">
 							{{
-							t('journal', 'Cancel journal entry creation') }}
+								t('journal', 'Cancel journal entry creation') }}
 						</ActionButton>
-						<ActionButton v-else
-							:disabled="true"
-							icon="icon-delete"
-							@click="deleteNote(journalEntry)">
+						<ActionButton v-else :disabled="true" icon="icon-delete" @click="deleteNote(journalEntry)">
 							{{
-							 t('journal', 'Delete journal entry') }}
+								t('journal', 'Delete journal entry') }}
 						</ActionButton>
 					</template>
 				</AppNavigationItem>
@@ -38,23 +28,17 @@
 		</AppNavigation>
 		<AppContent>
 			<div v-if="currentNote">
-				<input ref="title"
-					v-model="currentNote.title"
-					type="text"
-					:disabled="updating">
+				<input ref="title" v-model="currentNote.title" type="text" :disabled="updating">
 				<textarea ref="content" v-model="currentNote.content" :disabled="updating" />
-				<input type="button"
-					class="primary"
-					:value="t('journal', 'Save')"
-					:disabled="updating || !savePossible"
+				<input type="button" class="primary" :value="t('journal', 'Save')" :disabled="updating || !savePossible"
 					@click="saveEntry">
 			</div>
 			<div v-else id="emptycontent">
 				<div class="icon-file" />
-				<h2>{{t('journal', 'Create a entry to get started!')}}
-          {{ calendarStore?.calendars}}
-          {{ calendarStore?.journalTitles}}
-        </h2>
+				<h2>{{ t('journal', 'Create a entry to get started!') }}
+					{{ calendarStore?.calendars }}
+					{{ calendarStore?.journalTitles }}
+				</h2>
 			</div>
 		</AppContent>
 	</div>
@@ -72,7 +56,7 @@ import { generateUrl } from '@nextcloud/router'
 import { showError, showSuccess } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
 
-import {useCalendarStore} from "./stores/calendar.store";
+import { useCalendarStore } from "./stores/calendar.store";
 
 export default {
 	name: 'App',
@@ -89,7 +73,7 @@ export default {
 			currentJournalEntryId: null,
 			updating: false,
 			loading: true,
-      calendarStore: null,
+			calendarStore: null,
 		}
 	},
 	computed: {
@@ -123,9 +107,10 @@ export default {
 			console.error(e)
 			showError(t('notestutorial', 'Could not fetch notes'))
 		}
-    this.calendarStore = useCalendarStore();
-    await this.calendarStore.fetchJournalEntries();
-    console.log('entries', this.calendarStore.journalEntries);
+		this.calendarStore = useCalendarStore();
+		await this.calendarStore.fetchCalendars();
+		await this.calendarStore.fetchJournalEntries();
+		console.log('entries', this.calendarStore.journalEntries);
 		this.loading = false
 	},
 
@@ -172,6 +157,9 @@ export default {
 				})
 			}
 		},
+		selectCalendar(id/*: string*/) {
+			this.calendarStore.fetchJournalsByCalendarId(id);
+		},
 		/**
 		 * Abort creating a new note
 		 */
@@ -203,8 +191,8 @@ export default {
 		async updateEntry(journalEntry) {
 			this.updating = true
 			try {
-        console.log(journalEntry);
-        await this.calendarStore.updateJournalEntry(journalEntry);
+				console.log(journalEntry);
+				await this.calendarStore.updateJournalEntry(journalEntry);
 				// await axios.put(generateUrl(`/apps/journal/notes/${journalEntry.id}`), journalEntry)
 			} catch (e) {
 				console.error(e)
@@ -233,24 +221,25 @@ export default {
 }
 </script>
 <style scoped>
-	#app-content > div {
-		width: 100%;
-		height: 100%;
-		padding: 20px;
-		display: flex;
-		flex-direction: column;
-		flex-grow: 1;
-	}
-	.app-content {
-		padding-left: 40px!important;
-	}
+#app-content>div {
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
 
-	input[type='text'] {
-		width: 100%;
-	}
+.app-content {
+	padding-left: 40px !important;
+}
 
-	textarea {
-		flex-grow: 1;
-		width: 100%;
-	}
+input[type='text'] {
+	width: 100%;
+}
+
+textarea {
+	flex-grow: 1;
+	width: 100%;
+}
 </style>

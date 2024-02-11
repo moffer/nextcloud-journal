@@ -19,9 +19,26 @@ export const useCalendarStore = defineStore({
         fetchJournals() {
 
         },
+
+        async fetchCalendars() {
+            try {
+                this.calendars =  await calendarService.fetchCalendars();
+            } catch (error) {
+                alert(error)
+                console.log(error)
+            }            
+        },
+        async fetchJournalsByCalendarId(id: string) {
+            try {
+                this.journalEntries = await calendarService.fetchJournalEntriesFromCalendar(id);
+            } catch (error) {
+                alert(error)
+                console.log(error)
+            }
+        },
         async fetchJournalEntries() {
             try {
-                this.journalEntries = await calendarService.fetchCalendars();
+                this.journalEntries = await calendarService.fetchJournalEntries();
             } catch (error) {
                 alert(error)
                 console.log(error)
