@@ -10,7 +10,7 @@ services:
       - POSTGRES_DB=nextcloud
       - POSTGRES_USER=nextcloud
       - POSTGRES_PASSWORD=your-db-password
-    restart: unless-stopped
+    restart: no
 
   app:
     image: nextcloud:latest
@@ -21,14 +21,13 @@ services:
     ports:
       - "8080:80"
     volumes:
-      # - ./nextcloud-data:/var/www/html
-      - ./journal/:/var/www/html/custom_apps/journal
+      - .:/var/www/html/custom_apps/journal
     environment:
       - POSTGRES_HOST=db
       - POSTGRES_DB=nextcloud
       - POSTGRES_USER=nextcloud
       - POSTGRES_PASSWORD=your-db-password
-    restart: unless-stopped
+    restart: no
 
 volumes:
   nextcloud-db:
