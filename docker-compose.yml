@@ -21,7 +21,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html/custom_apps/journal
+      - ./:/var/www/html/custom_apps/journal
     environment:
       - POSTGRES_HOST=db
       - POSTGRES_DB=nextcloud
