@@ -7,19 +7,18 @@ import { JournalCalendar } from '../types/journal-calendar.type';
 
 
 export class CalendarService {
-    constructor() {
-
-    }
 
     async fetchCalendars(): Promise<JournalCalendar[]> {
         await initializeClientForUserView();
         const {calendars} = await findAll();
         // calendars[1].components -> only when VJOURNAL is in there
-        const journalCalendars: JournalCalendar[] = calendars.map(c => ({name: c.displayname, id: c.url.split('/').reverse()[1], url: c.url }));
+
+        const journalCalendars: JournalCalendar[] = calendars
+            .filter(c => c.components.includes('VJOURNAL'))
+            .map(c => ({name: c.displayname, id: c.url.split('/').reverse()[1], url: c.url }));
 
         return journalCalendars;
     }
-
 
     async fetchJournalEntriesFromCalendar(calendarId: string): Promise<Journal[]> {
         await initializeClientForUserView();
