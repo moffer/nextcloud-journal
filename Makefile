@@ -83,7 +83,7 @@ npm:
 ifeq (,$(wildcard $(CURDIR)/package.json))
 	cd js && $(npm) run build
 else
-	npm run build
+	npm install && npm run build
 endif
 
 # Removes the appstore build
