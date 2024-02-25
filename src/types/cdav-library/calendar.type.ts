@@ -1,4 +1,5 @@
 export interface Calendar {
+    components: string[];
     findByType(type: any): Promise<DavCalendarEvent[]>;
     get displayname(): string;
     get url(): string

@@ -1,9 +1,9 @@
-import {initializeClientForUserView, findAll, getSingleCalendar, findPrincipalByUrl} from './caldavService';
+import {findAll, getSingleCalendar, initializeClientForUserView} from './caldavService';
 import {mapDavCollectionToCalendar} from '../mapper/calendar.mapper';
 import {mapCDavObjectToCalendarObject} from '../mapper/calendarObject.mapper';
 import {Journal} from "../types/journal.type";
 import {CalendarObject} from "../types/cdav-library/calendar.type";
-import { JournalCalendar } from '../types/journal-calendar.type';
+import {JournalCalendar} from '../types/journal-calendar.type';
 
 
 export class CalendarService {
@@ -11,13 +11,10 @@ export class CalendarService {
     async fetchCalendars(): Promise<JournalCalendar[]> {
         await initializeClientForUserView();
         const {calendars} = await findAll();
-        // calendars[1].components -> only when VJOURNAL is in there
 
-        const journalCalendars: JournalCalendar[] = calendars
+        return calendars
             .filter(c => c.components.includes('VJOURNAL'))
-            .map(c => ({name: c.displayname, id: c.url.split('/').reverse()[1], url: c.url }));
-
-        return journalCalendars;
+            .map(c => ({name: c.displayname, id: c.url.split('/').reverse()[1], url: c.url}));
     }
 
     async fetchJournalEntriesFromCalendar(calendarId: string): Promise<Journal[]> {
