@@ -9,7 +9,7 @@
     <name>Journal</name>
     <summary>Journal App for CalDav</summary>
     <description><![CDATA[Journal App which is using CalDav from Nextcloud.]]></description>
-    <version>0.0.4-alpha1</version>
+    <version>0.0.4</version>
     <licence>agpl</licence>
     <author mail="ch.subel@gmx.de" >Rafael Muselmann</author>
     <namespace>Journal</namespace>

@@ -35,10 +35,7 @@
 			</div>
 			<div v-else id="emptycontent">
 				<div class="icon-file" />
-				<h2>{{ t('journal', 'Create a entry to get started!') }}
-					{{ calendarStore?.calendars }}
-					{{ calendarStore?.journalTitles }}
-				</h2>
+				<h2>{{ t('journal', 'Create a entry to get started!') }}</h2>
 			</div>
 		</AppContent>
 	</div>
